@@ -22,9 +22,6 @@ const usersSchema = new mongoose.Schema(
       required: true,
       unique: false,
     },
-    device: {
-      type: Object,
-    },
   },
   {
     _id: true,

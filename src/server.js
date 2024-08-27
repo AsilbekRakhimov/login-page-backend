@@ -16,12 +16,12 @@ app.use(cookieParser("my-cookie-secret"));
 await mongo();
 
 app.get("/", (req, res) => {
-  res.cookie("username", "demo qiymat", { maxAge: 60000, signed: true})
-  res.cookie("username2", "demo qiymatn 2", { maxAge: 60000})
+  res.cookie("username", "demo qiymat", { maxAge: 60000, signed: true });
+  res.cookie("username2", "demo qiymatn 2", { maxAge: 60000 });
 
   res.send({
     data: req.signedCookies,
-    cookies: req.cookies
+    cookies: req.cookies,
   });
 });
 
