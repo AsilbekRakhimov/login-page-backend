@@ -1,29 +1,34 @@
 import express from "express";
 import appConfig from "./config/app.config.js";
-import UAParser from "ua-parser-js";
 import bodyParser from "body-parser";
 import { mongo } from "./db/mongo.db.js";
-import cookieParser from "cookie-parser";
+import { ErrorHandlerMIddleware } from "./middlewares/error-handler.middleware.js";
+import cors from "cors";
+import router from "./routes/index.routes.js";
 
 const app = express();
 // body parserlar
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cookieParser("my-cookie-secret"));
-
 // mongo DB ulash
 await mongo();
 
-app.get("/", (req, res) => {
-  res.cookie("username", "demo qiymat", { maxAge: 60000, signed: true });
-  res.cookie("username2", "demo qiymatn 2", { maxAge: 60000 });
+// corsni ishlatish
+app.use(cors());
 
-  res.send({
-    data: req.signedCookies,
-    cookies: req.cookies,
+// main endpoint
+app.use("/api/v1", router)
+
+// notogri url uchun response
+app.all("*", (__, res) => {
+  res.status(404).send({
+    message: "Noto'g'ri url",
   });
 });
+
+// error handler middleware
+app.use(ErrorHandlerMIddleware);
 
 // serverni ishga tushirish
 app.listen(appConfig.port, appConfig.host, () => {

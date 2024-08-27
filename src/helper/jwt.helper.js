@@ -5,14 +5,14 @@ import { JwtTokenError } from "../errors/jwt.error.js";
 // sign access token
 export const signAccessToken = (data) => {
   return jwt.sign(data, jwtConfig.jwtAccessKey, {
-    expireIn: jwtConfig.jwtExpire,
+    expiresIn: jwtConfig.jwtExpire,
   });
 };
 
 // sign refresh token
 export const signRefreshToken = (data) => {
   return jwt.sign(data, jwtConfig.jwtRefreshKey, {
-    expireIn: jwtConfig.jwtRefreshExpire,
+    expiresIn: jwtConfig.jwtRefreshExpire,
   });
 };
 

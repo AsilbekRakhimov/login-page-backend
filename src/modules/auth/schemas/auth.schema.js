@@ -1,4 +1,3 @@
-import { required } from "joi";
 import mongoose from "mongoose";
 
 const usersSchema = new mongoose.Schema(
@@ -22,6 +21,14 @@ const usersSchema = new mongoose.Schema(
       required: true,
       unique: false,
     },
+    role:{
+      type:String,
+      default:"user"
+    },
+    devices: [{
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "devices",
+    }],
   },
   {
     _id: true,
